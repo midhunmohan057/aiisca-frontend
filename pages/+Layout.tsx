@@ -1,74 +1,38 @@
-import "./Layout.css";
-
-import logoUrl from "../assets/logo.svg";
-import { Link } from "../components/Link";
+import React from "react";
+import { Toaster } from "react-hot-toast";
+import Navbar from "@components/Navbar"; 
+import { color } from "@utilities/index"; 
+import "../src/index.css"; // Correct path relative to pages/ directory
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div
-      style={{
-        display: "flex",
-        maxWidth: 900,
-        margin: "auto",
-      }}
-    >
-      <Sidebar>
-        <Logo />
-        <Link href="/">Welcome</Link>
-        <Link href="/todo">Todo</Link>
-        <Link href="/star-wars">Data Fetching</Link>
-      </Sidebar>
-      <Content>{children}</Content>
-    </div>
-  );
-}
-
-function Sidebar({ children }: { children: React.ReactNode }) {
-  return (
-    <div
-      id="sidebar"
-      style={{
-        padding: 20,
-        flexShrink: 0,
-        display: "flex",
-        flexDirection: "column",
-        lineHeight: "1.8em",
-        borderRight: "2px solid #eee",
-      }}
-    >
-      {children}
-    </div>
-  );
-}
-
-function Content({ children }: { children: React.ReactNode }) {
-  return (
-    <div id="page-container">
-      <div
-        id="page-content"
-        style={{
-          padding: 20,
-          paddingBottom: 50,
-          minHeight: "100vh",
+    <React.Fragment>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          style: {
+            background: "#fff",
+            color: "#333",
+            borderRadius: "12px",
+            padding: "12px 16px",
+            boxShadow: "0 4px 10px rgba(0,0,0,0.08)",
+          },
+          success: {
+            iconTheme: {
+              primary: color?.PRIMARY_THEME || "#010080", 
+              secondary: "#fff",
+            },
+          },
         }}
-      >
-        {children}
-      </div>
-    </div>
-  );
-}
-
-function Logo() {
-  return (
-    <div
-      style={{
-        marginTop: 20,
-        marginBottom: 10,
-      }}
-    >
-      <a href="/">
-        <img src={logoUrl} height={64} width={64} alt="logo" />
-      </a>
-    </div>
+      />
+      
+      <Navbar />
+      
+      <main className="px-4 md:px-8 lg:px-12 py-6">
+        <div style={{ margin: 0 }}>
+          {children}
+        </div>
+      </main>
+    </React.Fragment>
   );
 }
