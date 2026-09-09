@@ -31,10 +31,17 @@ export default function Page() {
 
   const onSubmit: SubmitHandler<ContactFormValues> = async (data) => {
     try {
+      // 1. Create a new payload that includes the formType flag
+      const payload = {
+        ...data,
+        formType: "contact" 
+      };
+
       const response = await fetch("/.netlify/functions/submitContact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        // 2. Send the new payload instead of just 'data'
+        body: JSON.stringify(payload), 
       });
 
       if (response.ok) {
