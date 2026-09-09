@@ -33,7 +33,7 @@ export default function Page() {
 
   const handleReadMore = (id: string) => {
     // Vike intercepts this automatically for fast client-side routing
-    window.location.href = `/events/${id}`; 
+    window.location.href = `/event/${id}`; 
   };
 
   return (
