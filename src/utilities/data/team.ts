@@ -15,12 +15,6 @@ export const team = [
     },
   },
   {
-    name: "Vishal Sarpe",
-    role: "Vice President",
-    image: "/images/vishal.jpg",
-    social: {},
-  },
-  {
     name: "Prashant Randive",
     role: "President of Maharashtra State",
     image: teamImages.PrashantRandive,

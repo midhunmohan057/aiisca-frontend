@@ -4,6 +4,9 @@ import { images as assetsImage } from "@assets/index";
 import { blogData, BlogPost } from "@utilities/data/blogData";
 
 export default function Page() {
+  const imageWidth = 1080;
+  const imageHeight = 1350;
+
   // Separate the latest blog for the Hero section, and the rest for the grid
   const latestBlog = blogData[0];
   const olderBlogs = blogData.slice(1);
@@ -25,7 +28,9 @@ export default function Page() {
               <img 
                 src={latestBlog.imageUrl} 
                 alt={latestBlog.title} 
-                className="w-full h-[24rem] lg:h-[30rem] object-cover transform group-hover:scale-105 transition-transform duration-500 ease-in-out" 
+                width={imageWidth}
+                height={imageHeight}
+                className="w-full aspect-[3/4] object-cover transform group-hover:scale-105 transition-transform duration-500 ease-in-out" 
                 loading="lazy" 
               />
             </a>
@@ -69,11 +74,13 @@ export default function Page() {
               href={`/blog/${blog.slug}`}
               className="flex flex-col group cursor-pointer"
             >
-              <div className="aspect-[4/3] w-full overflow-hidden rounded-md mb-6 shadow-md">
+              <div className="aspect-[3/4] w-full overflow-hidden rounded-md mb-6 shadow-md">
                 {blog.imageUrl ? (
                   <img
                     src={blog.imageUrl}
                     alt={blog.title}
+                    width={imageWidth}
+                    height={imageHeight}
                     className="h-full w-full object-cover transform group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"
                   />

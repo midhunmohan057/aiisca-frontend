@@ -3,6 +3,9 @@ import { useData } from 'vike-react/useData';
 import type { ArticleData } from './+data';
 
 export default function Page() {
+  const imageWidth = 1080;
+  const imageHeight = 1350;
+
   // Use the data passed directly from +data.ts!
   const { article } = useData<ArticleData>();
 
@@ -48,10 +51,12 @@ export default function Page() {
                        <img
                          src={article.imageUrl}
                          alt={article.title}
-                         className="w-full h-auto object-cover rounded-lg shadow-md aspect-[4/3]"
+                         width={imageWidth}
+                         height={imageHeight}
+                         className="w-full h-auto object-cover rounded-lg shadow-md aspect-[3/4]"
                        />
                     ) : (
-                       <div className="w-full aspect-[4/3] bg-gray-200 rounded-lg flex items-center justify-center">No Image</div>
+                       <div className="w-full aspect-[3/4] bg-gray-200 rounded-lg flex items-center justify-center">No Image</div>
                     )}
                 </div>
                 <div className='self-center w-full lg:w-1/2'>
