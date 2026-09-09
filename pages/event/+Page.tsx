@@ -1,93 +1,76 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import ImageOverlaySection from "@components/ImageOverlaySection";
-import { images } from "@assets/index";
-import EventCard from "./EventCard";
-import { eventsData } from "@utilities/data/eventsData";
+import { images as assetsImage } from "@assets/index";
+import { eventsData, EventItem } from "@utilities/data/eventsData";
+import { Calendar, MapPin, Clock } from "lucide-react";
 
 export default function Page() {
-  const [remainingTime, setRemainingTime] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-
-  const currentTimestamp = new Date().getTime();
-  const upcomingEvent = eventsData.find(event => new Date(event.date).getTime() > currentTimestamp);
-  const previousEvents = eventsData.filter(event => new Date(event.date).getTime() <= currentTimestamp);
-
-  useEffect(() => {
-    if (upcomingEvent) {
-      const interval = setInterval(() => {
-        const diff = new Date(upcomingEvent.date).getTime() - new Date().getTime();
-        if (diff < 0) {
-          clearInterval(interval);
-          setRemainingTime({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-          return;
-        }
-        setRemainingTime({
-          days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((diff % (1000 * 60)) / 1000),
-        });
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [upcomingEvent]);
-
-  const handleReadMore = (id: string) => {
-    // Vike intercepts this automatically for fast client-side routing
-    window.location.href = `/event/${id}`; 
-  };
-
   return (
-    <>
+    <div className="min-h-screen bg-white">
       <ImageOverlaySection
-        description="Join our initiatives and programs..."
-        heading="Highlighted Events"
-        imageUrl={images.Overlay}
+        description="Stay updated with our upcoming public meetings, workshops, and grassroots campaigns across the country."
+        heading="Events & Programs"
+        imageUrl={assetsImage.Overlay}
       />
-      <div className="px-4 py-10 max-w-7xl mx-auto">
-        
-        <h2 className="text-lg font-bold uppercase tracking-wide text-gray-800 mb-6 flex items-center gap-2">
-          <span className="w-12 h-1 bg-primary-theme rounded"></span>
-          Upcoming Events
-        </h2>
 
-        {upcomingEvent ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-            <EventCard
-              id={upcomingEvent._id}
-              imageUrl={upcomingEvent.imageUrl}
-              title={upcomingEvent.title}
-              description={upcomingEvent.description}
-              date={upcomingEvent.date}
-              location={upcomingEvent.location || "Savitribai Resource Centre, Mumbai"}
-              label="Upcoming"
-              onReadMore={() => handleReadMore(upcomingEvent._id)}
-            />
-          </div>
-        ) : (
-          <p className="text-gray-500 mb-12">No upcoming events</p>
-        )}
+      <div className="px-4 lg:px-12 py-12 lg:py-20 max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl font-bold text-primary-theme uppercase tracking-wider">
+            All Events
+          </h1>
+          <div className="w-20 h-1 bg-primary-theme mx-auto mt-3 rounded-md" />
+        </div>
 
-        <h2 className="text-lg font-bold uppercase tracking-wide text-gray-800 mb-6 flex items-center gap-2">
-          <span className="w-12 h-1 bg-primary-theme rounded"></span>
-          Previous Events
-        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {eventsData.map((event: EventItem) => (
+            <a
+              key={event.id}
+              href={`/event/${event.slug}`}
+              className="flex flex-col group cursor-pointer bg-gray-50 rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow border border-gray-100"
+            >
+              <div className="aspect-video w-full overflow-hidden">
+                {event.imageUrl ? (
+                  <img
+                    src={event.imageUrl}
+                    alt={event.title}
+                    className="h-full w-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                ) : (
+                  <div className="h-full w-full bg-gray-200 flex items-center justify-center text-gray-400">
+                    No image
+                  </div>
+                )}
+              </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {previousEvents.map((event) => (
-            <EventCard
-              id={event._id}
-              key={event._id}
-              imageUrl={event.imageUrl}
-              title={event.title}
-              description={event.description}
-              date={event.date}
-              location={event.location || "Savitribai Resource Centre, Mumbai"}
-              label="Past"
-              onReadMore={() => handleReadMore(event._id)}
-            />
+              <div className="p-6 flex-grow flex flex-col">
+                <h3 className="text-xl font-bold uppercase leading-snug mb-4 group-hover:text-primary-theme transition-colors">
+                  {event.title}
+                </h3>
+                
+                <div className="space-y-2 mb-6 text-sm text-gray-600">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="size-4 text-primary-theme" />
+                    <span>{event.date}</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <MapPin className="size-4 text-primary-theme" />
+                    <span>{event.location}</span>
+                  </div>
+                </div>
+
+                <p className="text-gray-600 line-clamp-3 mb-6 flex-grow">
+                  {event.description}
+                </p>
+                
+                <div className="mt-auto inline-block px-6 py-2 border-2 border-primary-theme text-primary-theme uppercase tracking-widest text-sm font-bold group-hover:bg-primary-theme group-hover:text-white transition-colors text-center rounded-md">
+                  View Details
+                </div>
+              </div>
+            </a>
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
