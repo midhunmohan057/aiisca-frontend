@@ -164,12 +164,12 @@ export default function Page() {
                   <Label>Gender</Label>
                   <Select value={formData.gender} onValueChange={(value: string) => setValue("gender", value)}>
                     <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select gender" /></SelectTrigger>
-                    <SelectContent className="bg-white shadow-xl z-50">
+                    <SelectContent className="!bg-white !text-black border border-gray-300 shadow-xl z-50">
                       <SelectGroup>
-                        <SelectItem value="Male">Male</SelectItem>
-                        <SelectItem value="Female">Female</SelectItem>
-                        <SelectItem value="Transgender">Transgender</SelectItem>
-                        <SelectItem value="Other">Other</SelectItem>
+                        <SelectItem value="Male" className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">Male</SelectItem>
+                        <SelectItem value="Female" className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">Female</SelectItem>
+                        <SelectItem value="Transgender" className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">Transgender</SelectItem>
+                        <SelectItem value="Other" className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">Other</SelectItem>
                       </SelectGroup>
                     </SelectContent>
                   </Select>
@@ -224,9 +224,9 @@ export default function Page() {
                     }}
                   >
                     <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select state" /></SelectTrigger>
-                    <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
+                    <SelectContent className="!bg-white !text-black border border-gray-300 max-h-60 overflow-y-auto shadow-xl z-50">
                       {indianStates.map((state) => (
-                        <SelectItem key={state.isoCode} value={state.name}>{state.name}</SelectItem>
+                        <SelectItem key={state.isoCode} value={state.name} className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">{state.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -241,9 +241,9 @@ export default function Page() {
                     disabled={!formData.permanentState}
                   >
                     <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select city" /></SelectTrigger>
-                    <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
+                    <SelectContent className="!bg-white !text-black border border-gray-300 max-h-60 overflow-y-auto shadow-xl z-50">
                       {permanentCities.map((city) => (
-                        <SelectItem key={city.name} value={city.name}>{city.name}</SelectItem>
+                        <SelectItem key={city.name} value={city.name} className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">{city.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -266,14 +266,14 @@ export default function Page() {
                   <Label>Highest Qualification</Label>
                   <Select value={formData.highestQualification} onValueChange={(value: string) => setValue("highestQualification", value)}>
                     <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select qualification" /></SelectTrigger>
-                    <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
-                      <SelectItem value="10th Pass">10th Pass</SelectItem>
-                      <SelectItem value="12th Pass">12th Pass</SelectItem>
-                      <SelectItem value="Undergraduate">Undergraduate</SelectItem>
-                      <SelectItem value="Post Graduate">Post Graduate</SelectItem>
-                      <SelectItem value="PhD Scholar">PhD Scholar</SelectItem>
-                      <SelectItem value="PhD">PhD</SelectItem>
-                      <SelectItem value="Other">Other</SelectItem>
+                    <SelectContent className="!bg-white !text-black border border-gray-300 max-h-60 overflow-y-auto shadow-xl z-50">
+                      <SelectItem value="10th Pass" className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">10th Pass</SelectItem>
+                      <SelectItem value="12th Pass" className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">12th Pass</SelectItem>
+                      <SelectItem value="Undergraduate" className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">Undergraduate</SelectItem>
+                      <SelectItem value="Post Graduate" className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">Post Graduate</SelectItem>
+                      <SelectItem value="PhD Scholar" className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">PhD Scholar</SelectItem>
+                      <SelectItem value="PhD" className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">PhD</SelectItem>
+                      <SelectItem value="Other" className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">Other</SelectItem>
                     </SelectContent>
                   </Select>
                   {errors.highestQualification && <p className="text-red-500 text-sm mt-1">{errors.highestQualification.message}</p>}
@@ -317,9 +317,9 @@ export default function Page() {
                       }}
                     >
                       <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select state" /></SelectTrigger>
-                      <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
+                      <SelectContent className="!bg-white !text-black border border-gray-300 max-h-60 overflow-y-auto shadow-xl z-50">
                         {indianStates.map((state) => (
-                          <SelectItem key={state.isoCode} value={state.name}>{state.name}</SelectItem>
+                          <SelectItem key={state.isoCode} value={state.name} className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">{state.name}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
@@ -334,9 +334,9 @@ export default function Page() {
                       disabled={!formData.currentState}
                     >
                       <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select city" /></SelectTrigger>
-                      <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
+                      <SelectContent className="!bg-white !text-black border border-gray-300 max-h-60 overflow-y-auto shadow-xl z-50">
                         {currentCities.map((city) => (
-                          <SelectItem key={city.name} value={city.name}>{city.name}</SelectItem>
+                          <SelectItem key={city.name} value={city.name} className="focus:!bg-gray-100 focus:!text-black data-[highlighted]:!bg-gray-100 data-[highlighted]:!text-black cursor-pointer">{city.name}</SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
