@@ -2,6 +2,7 @@ import ImageOverlaySection from "@components/ImageOverlaySection";
 import { useState, useMemo } from "react";
 import { images as assetsImage } from "@assets/index";
 import { galleryData, ImageItem } from "@utilities/data/galleryData";
+import Footer from "@components/Footer";
 
 export default function Page() {
   const [name, setName] = useState<string>("");
@@ -49,14 +50,14 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div className="min-h-screen bg-white">
       <ImageOverlaySection
-        description="Explore the visual journey of AIISCA's events, public meetings, and grassroots mobilization efforts across India."
+        description="Our gallery is a reflection of the people, stories, and safe spaces that shape the AIISCA movement. Each moment captured represents hope, leadership, learning, and the strength of communities coming together with dignity, courage, and compassion for a more equal future."
         heading="Gallery"
         imageUrl={assetsImage.Overlay}
       />
       
-      <div className="px-4 py-10 max-w-7xl mx-auto">
+      <div className="px-4 py-10 max-w-7xl mx-auto min-h-[50vh]">
         {/* Heading */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-primary-theme uppercase">
@@ -148,6 +149,8 @@ export default function Page() {
           </div>
         )}
       </div>
-    </>
+      
+      <Footer />
+    </div>
   );
 }

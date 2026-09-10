@@ -3,6 +3,7 @@ import { icons, images } from "@assets/index";
 import SectionHeader from "@components/SectionHeader";
 import ManifestoCard from "./ManifestoCards";
 import MilestoneTimeline from "./Timeline";
+import Footer from "@components/Footer";
 
 export default function Page() {
   const cards: ManifestoCardProps[] = [
@@ -49,58 +50,52 @@ export default function Page() {
   ];
 
   return (
-    <section className="font-semibold text-sm overflow-hidden">
-      {/* Hero Section */}
-      <div className="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-10 pb-6">
-        <div className="w-full md:w-3/5">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-4 text-black-theme">
-            A <span className="text-primary-theme font-semibold">Pledge</span> for an <br />
-            inclusive and <br />
-            empowered future
-          </h1>
+    <div className="min-h-screen bg-white flex flex-col">
+      <div className="flex-grow px-4 md:px-8 lg:px-12 py-6 max-w-7xl mx-auto w-full">
+        <section className="font-semibold text-sm overflow-hidden">
+          {/* Hero Section */}
+          <div className="flex flex-col-reverse md:flex-row items-center gap-8 md:gap-10 pb-6">
+            <div className="w-full md:w-3/5">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight mb-4 text-black-theme">
+                A <span className="text-primary-theme font-semibold">Pledge</span> for an <br />
+                inclusive and <br />
+                empowered future
+              </h1>
 
-          <p className="text-sm md:text-base text-black-theme font-medium my-4">
-            {constants.MANIFESTO_HEADING}
-          </p>
+              <p className="text-sm md:text-base text-black-theme font-medium my-4">
+                {constants.MANIFESTO_HEADING}
+              </p>
 
-          <button className="bg-primary-theme text-white rounded-lg font-semibold px-4 py-2 hover:bg-primary-theme">
-            Explore our Vision Below
-          </button>
+              <button className="bg-primary-theme text-white rounded-lg font-semibold px-4 py-2 hover:bg-opacity-90 transition">
+                Explore our Vision Below
+              </button>
 
-          <p className="text-[5rem] sm:text-[3rem] md:text-[5rem] lg:text-[9rem] font-bold text-gray-500 opacity-20 mt-8 select-none tracking-wide leading-none">
-            PREAMBLE
-          </p>
-        </div>
+              <p className="text-[5rem] sm:text-[3rem] md:text-[5rem] lg:text-[9rem] font-bold text-gray-500 opacity-20 mt-8 select-none tracking-wide leading-none">
+                PREAMBLE
+              </p>
+            </div>
 
-        <div className="w-full md:w-2/5 flex justify-center">
-          <img
-            src={images.Sthambha}
-            alt="Sthambha"
-            className="scale-x-125 scale-y-110 w-full max-w-[500px] md:max-w-[600px] lg:max-w-[700px] h-auto object-contain"
-          />
-        </div>
-      </div>
-
-      <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 text-black-theme font-medium my-8">
-        <div className="bg-primary-theme w-4 sm:w-6 h-6 sm:h-20" />
-        <div className="sm:ml-1">{constants.MANIFESTO_DESCRIPTION2}</div>
-      </div>
-
-      <ManifestoCard cardData={cards} />
-      
-      <MilestoneTimeline />
-
-      <div className="mt-12">
-        <SectionHeader title="Conclusion" color="black" />
-        <div className="w-full max-w-full flex flex-col sm:flex-row items-start gap-3 text-black-theme font-medium mt-4">
-          <div className="bg-primary-theme w-4 sm:w-3 h-6 sm:h-24" />
-          <div className="sm:ml-1">
-            {constants.MANIFESTO_CONCLUSION}
-            <br /><br />
-            We invite all stakeholders—technologists, policymakers, businesses, civil society organizations, and citizens—to join us in this vital endeavor. Together, we can shape an AI-enabled future that amplifies human potential, addresses our greatest challenges, and reflects our highest aspirations.
+            <div className="w-full md:w-2/5 flex justify-center">
+              <img
+                src={images.Sthambha}
+                alt="Sthambha"
+                className="scale-x-125 scale-y-110 w-full max-w-[500px] md:max-w-[600px] lg:max-w-[700px] h-auto object-contain"
+              />
+            </div>
           </div>
-        </div>
+
+          <div className="flex flex-col sm:flex-row items-start gap-3 sm:gap-4 text-black-theme font-medium my-8">
+            <div className="bg-primary-theme w-4 sm:w-6 h-6 sm:h-20" />
+            <div className="sm:ml-1">{constants.MANIFESTO_DESCRIPTION2}</div>
+          </div>
+
+          <ManifestoCard cardData={cards} />
+          
+          <MilestoneTimeline />
+        </section>
       </div>
-    </section>
+
+      <Footer />
+    </div>
   );
 }

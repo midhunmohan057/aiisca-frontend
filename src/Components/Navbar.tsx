@@ -14,13 +14,11 @@ const Navbar = () => {
     setIsOpen(!isOpen);
   };
 
-  // Helper function to keep the JSX clean
   const isActive = (path: string) => (currentPath === path ? "active" : "");
 
   return (
     <nav className="navbar-container">
       <div className="logo-container">
-        {/* Assumes logo2.png is moved to the public/ folder */}
         <a href="/">
           <img src="/logo2.png" alt="Your Logo" className="logo" />
         </a>
@@ -39,9 +37,6 @@ const Navbar = () => {
           <li className={isActive("/event")}>
             <a onClick={toggleMenu} href="/event">Event</a>
           </li>
-          <li className={isActive("/reports")}>
-            <a onClick={toggleMenu} href="/reports">Reports</a>
-          </li>
           <li className={isActive("/gallery")}>
             <a onClick={toggleMenu} href="/gallery">Gallery</a>
           </li>
@@ -52,7 +47,7 @@ const Navbar = () => {
             <a onClick={toggleMenu} href="/membership">Membership</a>
           </li>
           <li className={isActive("/blog")}>
-            <a onClick={toggleMenu} href="/blog">Blog</a>
+            <a onClick={toggleMenu} href="/blog">TAC</a>
           </li>
         </ul>
       </div>

@@ -10,6 +10,7 @@ import { HiOutlineBuildingLibrary } from "react-icons/hi2";
 import DemandsCard from "./DemandsCards";
 import Journey from "./Journey";
 import CallToAction from "./CallToAction";
+import Footer from "@components/Footer";
 
 export default function Page() {
   const cards: DemandsCardProps[] = [
@@ -41,20 +42,26 @@ export default function Page() {
   ];
 
   return (
-    <section className="font-semibold text-sm">
-      <div>
-        <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-6 text-black-theme">
-          Our Demands: Building an Equal <br />
-          Nation for Dalits
-        </h1>
-        <p className="text-sm text-black-theme font-medium w-full sm:w-[40%] py-2">
-          {constants.DEMANDS_DESCRIPTION}
-        </p>
+    <div className="min-h-screen bg-white flex flex-col">
+      <div className="flex-grow">
+        <section className="font-semibold text-sm">
+          <div>
+            <h1 className="text-4xl md:text-5xl font-semibold leading-tight mb-6 text-black-theme">
+              Our Demands: Building an Equal <br />
+              Nation for Dalits
+            </h1>
+            <p className="text-sm text-black-theme font-medium w-full sm:w-[40%] py-2">
+              {constants.DEMANDS_DESCRIPTION}
+            </p>
+          </div>
+          
+          <DemandsCard cardData={cards} />
+          <Journey />
+          <CallToAction />
+        </section>
       </div>
-      
-      <DemandsCard cardData={cards} />
-      <Journey />
-      <CallToAction />
-    </section>
+
+      <Footer />
+    </div>
   );
 }

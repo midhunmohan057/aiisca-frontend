@@ -13,6 +13,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import ImageOverlaySection from "@components/ImageOverlaySection";
+import Footer from "@components/Footer";
 
 interface MembershipFormValues {
   fullName: string; gender: string; dateOfBirth: string; category: string; caste: string;
@@ -140,243 +141,247 @@ export default function Page() {
   };
 
   return (
-    <Card className="max-w-4xl mx-auto mt-8 shadow-lg">
-      <ImageOverlaySection
-        description="Join our movement and help us build a more inclusive society."
-        heading="Membership Application Form"
-        imageUrl={assetsImage.Overlay}
-      />
-      <CardContent>
-        <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
-          {/* Personal Information */}
-          <section>
-            <div className="mb-4"><SectionHeader color="black" title="Personal Information" /></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label>Full Name</Label>
-                <Input type="text" {...register("fullName")} placeholder="Enter full name" />
-                {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>}
-              </div>
-
-              <div>
-                <Label>Gender</Label>
-                <Select value={formData.gender} onValueChange={(value: string) => setValue("gender", value)}>
-                  <SelectTrigger className="bg-white"><SelectValue placeholder="Select gender" /></SelectTrigger>
-                  <SelectContent className="bg-white shadow-xl z-50">
-                    <SelectGroup>
-                      <SelectItem value="Male">Male</SelectItem>
-                      <SelectItem value="Female">Female</SelectItem>
-                      <SelectItem value="Transgender">Transgender</SelectItem>
-                      <SelectItem value="Other">Other</SelectItem>
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-                {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender.message}</p>}
-              </div>
-
-              <div>
-                <Label>Date of Birth</Label>
-                <Input type="date" {...register("dateOfBirth")} />
-                {errors.dateOfBirth && <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth.message}</p>}
-              </div>
-
-              <div>
-                <Label>Category</Label>
-                <Input {...register("category")} placeholder="Enter category" />
-                {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>}
-              </div>
-
-              <div>
-                <Label>Caste</Label>
-                <Input {...register("caste")} placeholder="Enter caste" />
-                {errors.caste && <p className="text-red-500 text-sm mt-1">{errors.caste.message}</p>}
-              </div>
-
-              <div>
-                <Label>Email</Label>
-                <Input type="email" {...register("email")} placeholder="Enter email" />
-                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
-              </div>
-
-              <div>
-                <Label>Contact Number</Label>
-                <Input {...register("contactNumber")} placeholder="10-digit number" />
-                {errors.contactNumber && <p className="text-red-500 text-sm mt-1">{errors.contactNumber.message}</p>}
-              </div>
-
-              <div className="md:col-span-2">
-                <Label>Permanent Address</Label>
-                <Input {...register("permanentAddress")} placeholder="Enter address" />
-                {errors.permanentAddress && <p className="text-red-500 text-sm mt-1">{errors.permanentAddress.message}</p>}
-              </div>
-
-              <div>
-                <Label>Permanent State</Label>
-                <Select
-                  value={formData.permanentState}
-                  onValueChange={(value: string) => {
-                    setValue("permanentState", value);
-                    setValue("permanentCity", "");
-                    const selected = indianStates.find((s) => s.name === value);
-                    setPermanentCities(City.getCitiesOfState("IN", selected?.isoCode as string) || []);
-                  }}
-                >
-                  <SelectTrigger className="bg-white"><SelectValue placeholder="Select state" /></SelectTrigger>
-                  <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
-                    {indianStates.map((state) => (
-                      <SelectItem key={state.isoCode} value={state.name}>{state.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.permanentState && <p className="text-red-500 text-sm mt-1">{errors.permanentState.message}</p>}
-              </div>
-
-              <div>
-                <Label>Permanent City</Label>
-                <Select
-                  value={formData.permanentCity}
-                  onValueChange={(value: string) => setValue("permanentCity", value)}
-                  disabled={!formData.permanentState}
-                >
-                  <SelectTrigger className="bg-white"><SelectValue placeholder="Select city" /></SelectTrigger>
-                  <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
-                    {permanentCities.map((city) => (
-                      <SelectItem key={city.name} value={city.name}>{city.name}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                {errors.permanentCity && <p className="text-red-500 text-sm mt-1">{errors.permanentCity.message}</p>}
-              </div>
-
-              <div>
-                <Label>Pincode</Label>
-                <Input {...register("permanentPincode")} placeholder="6-digit pincode" />
-                {errors.permanentPincode && <p className="text-red-500 text-sm mt-1">{errors.permanentPincode.message}</p>}
-              </div>
-            </div>
-          </section>
-
-          {/* Educational Background */}
-          <section>
-            <div className="mb-4"><SectionHeader color="black" title="Educational Background" /></div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <Label>Highest Qualification</Label>
-                <Select value={formData.highestQualification} onValueChange={(value: string) => setValue("highestQualification", value)}>
-                  <SelectTrigger className="bg-white"><SelectValue placeholder="Select qualification" /></SelectTrigger>
-                  <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
-                    <SelectItem value="10th Pass">10th Pass</SelectItem>
-                    <SelectItem value="12th Pass">12th Pass</SelectItem>
-                    <SelectItem value="Undergraduate">Undergraduate</SelectItem>
-                    <SelectItem value="Post Graduate">Post Graduate</SelectItem>
-                    <SelectItem value="PhD Scholar">PhD Scholar</SelectItem>
-                    <SelectItem value="PhD">PhD</SelectItem>
-                    <SelectItem value="Other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-                {errors.highestQualification && <p className="text-red-500 text-sm mt-1">{errors.highestQualification.message}</p>}
-              </div>
-
-              <div>
-                <Label>Occupation</Label>
-                <Input {...register("occupation")} placeholder="Enter occupation" />
-                {errors.occupation && <p className="text-red-500 text-sm mt-1">{errors.occupation.message}</p>}
-              </div>
-            </div>
-          </section>
-
-          {/* Current Address Section */}
-          <section>
-            <div className="flex items-center space-x-2 mb-4">
-              <Checkbox
-                checked={formData.sameAsPermanent}
-                onCheckedChange={(checked: boolean) => setValue("sameAsPermanent", !!checked)}
-              />
-              <Label className="font-semibold text-gray-800 cursor-pointer">Same as Permanent Address</Label>
-            </div>
-
-            {!formData.sameAsPermanent && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 border-t">
-                <div className="md:col-span-2">
-                  <Label>Current Address</Label>
-                  <Input {...register("currentAddress")} placeholder="Enter current address" />
-                  {errors.currentAddress && <p className="text-red-500 text-sm mt-1">{errors.currentAddress.message}</p>}
+    <div className="min-h-screen bg-white">
+      <Card className="max-w-4xl mx-auto mt-8 mb-16 shadow-lg border-0">
+        <ImageOverlaySection
+          description="Every movement begins with people who choose to make a difference. By becoming a member of AIISCA, you stand alongside a community committed to advancing educational equity, social justice, and dignity for all. Together, we can empower marginalized communities, nurture future leaders, and build a more inclusive society through collaboration, compassion, and action."
+          heading="JOIN THE MOVEMENT"
+          imageUrl={assetsImage.Overlay}
+        />
+        <CardContent className="px-6 py-8">
+          <form className="space-y-8" onSubmit={handleSubmit(onSubmit)}>
+            {/* Personal Information */}
+            <section>
+              <div className="mb-4"><SectionHeader color="black" title="Personal Information" /></div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <Label>Full Name</Label>
+                  <Input type="text" {...register("fullName")} placeholder="Enter full name" className="border border-gray-300 px-3 py-2" />
+                  {errors.fullName && <p className="text-red-500 text-sm mt-1">{errors.fullName.message}</p>}
                 </div>
 
                 <div>
-                  <Label>Current State</Label>
+                  <Label>Gender</Label>
+                  <Select value={formData.gender} onValueChange={(value: string) => setValue("gender", value)}>
+                    <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select gender" /></SelectTrigger>
+                    <SelectContent className="bg-white shadow-xl z-50">
+                      <SelectGroup>
+                        <SelectItem value="Male">Male</SelectItem>
+                        <SelectItem value="Female">Female</SelectItem>
+                        <SelectItem value="Transgender">Transgender</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                  {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender.message}</p>}
+                </div>
+
+                <div>
+                  <Label>Date of Birth</Label>
+                  <Input type="date" {...register("dateOfBirth")} className="border border-gray-300 px-3 py-2" />
+                  {errors.dateOfBirth && <p className="text-red-500 text-sm mt-1">{errors.dateOfBirth.message}</p>}
+                </div>
+
+                <div>
+                  <Label>Category</Label>
+                  <Input {...register("category")} placeholder="Enter category" className="border border-gray-300 px-3 py-2" />
+                  {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>}
+                </div>
+
+                <div>
+                  <Label>Caste</Label>
+                  <Input {...register("caste")} placeholder="Enter caste" className="border border-gray-300 px-3 py-2" />
+                  {errors.caste && <p className="text-red-500 text-sm mt-1">{errors.caste.message}</p>}
+                </div>
+
+                <div>
+                  <Label>Email</Label>
+                  <Input type="email" {...register("email")} placeholder="Enter email" className="border border-gray-300 px-3 py-2" />
+                  {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                </div>
+
+                <div>
+                  <Label>Contact Number</Label>
+                  <Input {...register("contactNumber")} placeholder="10-digit number" className="border border-gray-300 px-3 py-2" />
+                  {errors.contactNumber && <p className="text-red-500 text-sm mt-1">{errors.contactNumber.message}</p>}
+                </div>
+
+                <div className="md:col-span-2">
+                  <Label>Permanent Address</Label>
+                  <Input {...register("permanentAddress")} placeholder="Enter address" className="border border-gray-300 px-3 py-2 w-full" />
+                  {errors.permanentAddress && <p className="text-red-500 text-sm mt-1">{errors.permanentAddress.message}</p>}
+                </div>
+
+                <div>
+                  <Label>Permanent State</Label>
                   <Select
-                    value={formData.currentState}
+                    value={formData.permanentState}
                     onValueChange={(value: string) => {
-                      setValue("currentState", value);
-                      setValue("currentCity", "");
+                      setValue("permanentState", value);
+                      setValue("permanentCity", "");
                       const selected = indianStates.find((s) => s.name === value);
-                      setCurrentCities(City.getCitiesOfState("IN", selected?.isoCode as string) || []);
+                      setPermanentCities(City.getCitiesOfState("IN", selected?.isoCode as string) || []);
                     }}
                   >
-                    <SelectTrigger className="bg-white"><SelectValue placeholder="Select state" /></SelectTrigger>
+                    <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select state" /></SelectTrigger>
                     <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
                       {indianStates.map((state) => (
                         <SelectItem key={state.isoCode} value={state.name}>{state.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                  {errors.currentState && <p className="text-red-500 text-sm mt-1">{errors.currentState.message}</p>}
+                  {errors.permanentState && <p className="text-red-500 text-sm mt-1">{errors.permanentState.message}</p>}
                 </div>
 
                 <div>
-                  <Label>Current City</Label>
+                  <Label>Permanent City</Label>
                   <Select
-                    value={formData.currentCity}
-                    onValueChange={(value: string) => setValue("currentCity", value)}
-                    disabled={!formData.currentState}
+                    value={formData.permanentCity}
+                    onValueChange={(value: string) => setValue("permanentCity", value)}
+                    disabled={!formData.permanentState}
                   >
-                    <SelectTrigger className="bg-white"><SelectValue placeholder="Select city" /></SelectTrigger>
+                    <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select city" /></SelectTrigger>
                     <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
-                      {currentCities.map((city) => (
+                      {permanentCities.map((city) => (
                         <SelectItem key={city.name} value={city.name}>{city.name}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
-                  {errors.currentCity && <p className="text-red-500 text-sm mt-1">{errors.currentCity.message}</p>}
+                  {errors.permanentCity && <p className="text-red-500 text-sm mt-1">{errors.permanentCity.message}</p>}
                 </div>
 
                 <div>
                   <Label>Pincode</Label>
-                  <Input {...register("currentPincode")} placeholder="6-digit pincode" />
-                  {errors.currentPincode && <p className="text-red-500 text-sm mt-1">{errors.currentPincode.message}</p>}
+                  <Input {...register("permanentPincode")} placeholder="6-digit pincode" className="border border-gray-300 px-3 py-2" />
+                  {errors.permanentPincode && <p className="text-red-500 text-sm mt-1">{errors.permanentPincode.message}</p>}
                 </div>
               </div>
-            )}
-          </section>
+            </section>
 
-          {/* Declaration */}
-          <section className="flex items-start space-x-3 bg-gray-50 p-4 rounded-lg">
-            <Checkbox
-              className="mt-1"
-              checked={formData.agreeToTerms}
-              onCheckedChange={(checked: boolean) => setValue("agreeToTerms", !!checked)}
-            />
-            <div>
-              <Label className="text-sm text-gray-700 leading-relaxed">
-                I hereby declare that the information provided is true and accurate. I agree to abide by the rules and consent to the processing of my personal data.
-              </Label>
-              {errors.agreeToTerms && <p className="text-red-500 text-sm mt-1">{errors.agreeToTerms.message}</p>}
+            {/* Educational Background */}
+            <section>
+              <div className="mb-4"><SectionHeader color="black" title="Educational Background" /></div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <Label>Highest Qualification</Label>
+                  <Select value={formData.highestQualification} onValueChange={(value: string) => setValue("highestQualification", value)}>
+                    <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select qualification" /></SelectTrigger>
+                    <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
+                      <SelectItem value="10th Pass">10th Pass</SelectItem>
+                      <SelectItem value="12th Pass">12th Pass</SelectItem>
+                      <SelectItem value="Undergraduate">Undergraduate</SelectItem>
+                      <SelectItem value="Post Graduate">Post Graduate</SelectItem>
+                      <SelectItem value="PhD Scholar">PhD Scholar</SelectItem>
+                      <SelectItem value="PhD">PhD</SelectItem>
+                      <SelectItem value="Other">Other</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {errors.highestQualification && <p className="text-red-500 text-sm mt-1">{errors.highestQualification.message}</p>}
+                </div>
+
+                <div>
+                  <Label>Occupation</Label>
+                  <Input {...register("occupation")} placeholder="Enter occupation" className="border border-gray-300 px-3 py-2" />
+                  {errors.occupation && <p className="text-red-500 text-sm mt-1">{errors.occupation.message}</p>}
+                </div>
+              </div>
+            </section>
+
+            {/* Current Address Section */}
+            <section>
+              <div className="flex items-center space-x-2 mb-4">
+                <Checkbox
+                  checked={formData.sameAsPermanent}
+                  onCheckedChange={(checked: boolean) => setValue("sameAsPermanent", !!checked)}
+                />
+                <Label className="font-semibold text-gray-800 cursor-pointer">Same as Permanent Address</Label>
+              </div>
+
+              {!formData.sameAsPermanent && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 border-t">
+                  <div className="md:col-span-2">
+                    <Label>Current Address</Label>
+                    <Input {...register("currentAddress")} placeholder="Enter current address" className="border border-gray-300 px-3 py-2 w-full" />
+                    {errors.currentAddress && <p className="text-red-500 text-sm mt-1">{errors.currentAddress.message}</p>}
+                  </div>
+
+                  <div>
+                    <Label>Current State</Label>
+                    <Select
+                      value={formData.currentState}
+                      onValueChange={(value: string) => {
+                        setValue("currentState", value);
+                        setValue("currentCity", "");
+                        const selected = indianStates.find((s) => s.name === value);
+                        setCurrentCities(City.getCitiesOfState("IN", selected?.isoCode as string) || []);
+                      }}
+                    >
+                      <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select state" /></SelectTrigger>
+                      <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
+                        {indianStates.map((state) => (
+                          <SelectItem key={state.isoCode} value={state.name}>{state.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.currentState && <p className="text-red-500 text-sm mt-1">{errors.currentState.message}</p>}
+                  </div>
+
+                  <div>
+                    <Label>Current City</Label>
+                    <Select
+                      value={formData.currentCity}
+                      onValueChange={(value: string) => setValue("currentCity", value)}
+                      disabled={!formData.currentState}
+                    >
+                      <SelectTrigger className="bg-white border border-gray-300 px-3 py-2"><SelectValue placeholder="Select city" /></SelectTrigger>
+                      <SelectContent className="bg-white max-h-60 overflow-y-auto shadow-xl z-50">
+                        {currentCities.map((city) => (
+                          <SelectItem key={city.name} value={city.name}>{city.name}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.currentCity && <p className="text-red-500 text-sm mt-1">{errors.currentCity.message}</p>}
+                  </div>
+
+                  <div>
+                    <Label>Pincode</Label>
+                    <Input {...register("currentPincode")} placeholder="6-digit pincode" className="border border-gray-300 px-3 py-2" />
+                    {errors.currentPincode && <p className="text-red-500 text-sm mt-1">{errors.currentPincode.message}</p>}
+                  </div>
+                </div>
+              )}
+            </section>
+
+            {/* Declaration */}
+            <section className="flex items-start space-x-3 bg-gray-50 p-4 rounded-lg">
+              <Checkbox
+                className="mt-1"
+                checked={formData.agreeToTerms}
+                onCheckedChange={(checked: boolean) => setValue("agreeToTerms", !!checked)}
+              />
+              <div>
+                <Label className="text-sm text-gray-700 leading-relaxed">
+                  I hereby declare that the information provided is true and accurate. I agree to abide by the rules and consent to the processing of my personal data.
+                </Label>
+                {errors.agreeToTerms && <p className="text-red-500 text-sm mt-1">{errors.agreeToTerms.message}</p>}
+              </div>
+            </section>
+
+            {/* Submit */}
+            <div className="text-center pt-4">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="px-8 py-3 bg-primary-theme text-white rounded-md font-semibold hover:bg-opacity-90 transition disabled:opacity-50"
+              >
+                {isSubmitting ? "Submitting..." : "Submit Application"}
+              </button>
             </div>
-          </section>
-
-          {/* Submit */}
-          <div className="text-center pt-4">
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="px-8 py-3 bg-primary-theme text-white rounded-md font-semibold hover:bg-opacity-90 transition disabled:opacity-50"
-            >
-              {isSubmitting ? "Submitting..." : "Submit Application"}
-            </button>
-          </div>
-        </form>
-      </CardContent>
-    </Card>
+          </form>
+        </CardContent>
+      </Card>
+      
+      <Footer />
+    </div>
   );
 }
