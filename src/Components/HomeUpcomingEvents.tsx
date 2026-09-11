@@ -20,7 +20,7 @@ export default function HomeUpcomingEvents() {
     <section className="py-12">
       <div className="flex items-center justify-between mb-8">
         <SectionHeader title="Upcoming Events" color="black" />
-        <ViewAllLink href="/events" text="View All" />
+        <ViewAllLink href="/event" text="View All" />
       </div>
 
       <div className="w-full">
